@@ -1,0 +1,9 @@
+<form action = "{% url 'dj-auth:login' %}" method = "POST">
+    {% csrf_token %}
+    {{ form_class.as_p }}
+    {{ form_class.errors }}
+    <button type = "submit">{{ login_button|default:"Log In" }}</button>
+    {% if next %}
+        <input type = "hidden" name = "next"  value = "{{ next }}" />
+    {% endif %}
+</form>

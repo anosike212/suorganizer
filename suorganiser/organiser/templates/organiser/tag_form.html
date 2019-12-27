@@ -1,0 +1,58 @@
+{% extends parent_template|default:"organiser/base_organiser.html" %}
+
+{% block title %}
+{{ block.super }} - Create Tag
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div>
+            <form action = "{% url 'organiser_tag_create' %}" method = "POST">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <ul class = "custom_error_list">
+                        {% for error in form.non_field_errors %}
+                            <li><em>{{ error }}</em></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <p>
+                    <label for = "id_name">Name:</label>
+                    {% if form.name.value %}
+                        <input id = "id_name" maxlength = "31" name = "name" type = "text" value = "{{ form.name.value }}" />
+                    {% else %}
+                        <input id = "id_name" maxlength = "31" name = "name" type = "text" />
+                    {% endif %}
+                </p>
+                {% if form.name.errors %}
+                    <ul class = "custom_error_list">
+                        {% for error in form.name.errors %}
+                            <li><em>{{ error }}</em></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <p>
+                    <label for = "id_slug">Slug:</label>
+                    {% if form.slug.value %}
+                        <input id = "id_slug" maxlength = "31" name = "slug" type = "text" value = "{{ form.slug.value }}" />
+                    {% else %}
+                        <input id = "id_slug" maxlength = "31" name = "slug" type = "text" />
+                    {% endif %}
+                    <span class = "helptext">
+                        A Label for URL config
+                    </span>
+                </p>
+                {% if form.slug.errors %}
+                    <ul class = "custom_error_list">
+                        {% for error in form.slug.errors %}
+                            <li><em>{{ error }}</em></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <button type = "submit">
+                    Create Tag
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

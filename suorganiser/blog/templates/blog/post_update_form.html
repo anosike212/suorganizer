@@ -1,0 +1,10 @@
+{% extends parent_template|default:"organiser/base_organiser.html" %}
+{% load display_form %}
+
+{% block title %}
+    {{ block.super }} - Update Post
+{% endblock %}
+
+{% block content %}
+    {% form post.get_update_url 'Update Blog Post' %}
+{% endblock %}

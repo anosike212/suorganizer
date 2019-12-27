@@ -1,0 +1,21 @@
+{% extends parent_template|default:"organiser/base_organiser.html" %}
+
+{% block title %}
+    {{ block.super }} - Delete Newslink
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div>
+            <form action = "{{ newslink.get_delete_url }}" method = "POST">
+                {% csrf_token %}
+                <p>
+                    Are you sure you want to delete 
+                    newslink {{ newslink.title }}?
+                </p>
+                <a href = "{{ newslink.get_absolute_url }}">Cancel</a>
+                <button type = "submit">Delete Newslink</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

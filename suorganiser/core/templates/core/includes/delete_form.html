@@ -1,0 +1,13 @@
+<div>
+    <div>
+        <form action = "{{ action }}" method = "{{ method|default:'post' }}">
+            {% csrf_token %}
+            <p>
+                Are you sure you want to delete 
+                Post {{ display_attr }}?
+            </p>
+            <a href = "{{ cancel_url }}">Cancel</a>
+            <button type = "submit">{{ button }}</button>
+        </form>
+    </div>
+</div>

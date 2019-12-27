@@ -1,0 +1,10 @@
+{% extends parent_template|default:"blog/base_blog.html" %}
+{% load delete_form %}
+
+{% block title %}
+    {{ block.super }} - Delete Post
+{% endblock %}
+
+{% block content %}
+    {% delete post.get_delete_url post.title post.get_absolute_url 'Delete' %}
+{% endblock %}

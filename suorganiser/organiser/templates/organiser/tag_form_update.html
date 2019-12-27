@@ -1,0 +1,26 @@
+{% extends parent_template|default:"organiser/base_organiser.html" %}
+
+{% block title %}
+    {{ block.super }} - Update Tag
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div>
+            <form action = "{{ tag.get_update_url }}" method = "POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    {{ field.errors }}
+                    <p>
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.help_text %}
+                            {{ field.help_text }}
+                        {% endif %}
+                    </p>
+                {% endfor %}
+                <button type = "submit">Update Tag</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

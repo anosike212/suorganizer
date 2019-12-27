@@ -1,0 +1,26 @@
+{% extends parent_template|default:"user/base_user.html" %}
+
+{% block title %}
+    {{ block.super }} - Login
+{% endblock %}
+
+{% block content %}
+    <div class = "row">
+        <div class = "offset-by-two five columns">
+            {% include "user/login_form.html" with login_button='Log In' %}
+        </div>
+    </div>
+    <div class ="offset-by-two three columns">
+        <ul class = "task-list">
+            <li><a href = "{% url 'dj-auth:pw_reset_start' %}">
+                Forgotten Password?
+            </a></li>
+            <li><a href = "{% url 'dj-auth:resend_activation' %}">
+                Lost Activation E-Mail?
+            </a></li>
+            <li><a href = "{% url 'dj-auth:create' %}">
+                Register New Account
+            </a></li>
+        </ul>
+    </div>
+{% endblock %}

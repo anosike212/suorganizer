@@ -1,0 +1,54 @@
+{% extends parent_template|default:"organiser/base_organiser.html" %}
+
+{% block title %}
+    {{ block.super }} - Startups
+{% endblock %}
+
+{% block create_button %}
+    {% if perms.add_startup %}
+    <a href = "{% url 'organiser_startup_create' %}" class = "button button-primary">
+        Create New Startup
+    </a>
+    {% endif %}
+{% endblock %}
+
+{% block org_content %}
+    <h2>Startup List</h2>
+    <div class = "mobile">
+        <a href = "{% url 'organiser_startup_create' %}" class = "button button-primary">Create New Startup</a>
+    </div>
+    <ul>
+        {% for startup in startup_list %}
+            <li>
+                <a href = "{{ startup.get_absolute_url }}">
+                    {{ startup.name }}</a>
+                {% if perms.organiser.change_startup %}
+                (<a href = "{{ startup.get_update_url }}">Edit</a>)
+                {% endif %}
+                {% if perms.organiser.delete_startup %}
+                (<a href = "{{ startup.get_delete_url }}">Delete</a>)
+                {% endif %}
+            </li>
+        {% empty %}
+            <li><em>No Startups Available.</em></li>
+        {% endfor %}
+        {% if startup_list.has_other_pages %}
+            <ul class = "inline">
+                {% if previous_page_url %}
+                    <li><a href = "{{ previous_page_url }}" class = "button">
+                        Previous
+                    </a></li>
+                {% endif %}
+                <li>
+                    Page {{ startup_list.number }}
+                    of {{ paginator.num_pages }}
+                </li>
+                {% if next_page_url %}
+                    <li><a href = "{{ next_page_url }}" class = "button">
+                        next
+                    </a></li>
+                {% endif %}
+            </ul>
+        {% endif %}
+    </ul>
+{% endblock %}

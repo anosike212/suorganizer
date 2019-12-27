@@ -1,0 +1,11 @@
+{% extends parent_template|default:"blog/base_blog.html" %}
+{% load display_form %}
+
+{% block title %}
+    {{ block.super }} - Create Blog Post
+{% endblock %}
+
+{% block content %}
+    {% url 'blog_post_create' as form_url %}
+    {% form form_url 'Create Blog Post' %}
+{% endblock %}

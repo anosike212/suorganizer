@@ -1,0 +1,77 @@
+{% extends parent_template|default:"organiser/base_organiser.html" %}
+{% load obfuscate_email %}
+{% load partial_post_list %}
+
+{% block title %}
+    {{ block.super }} - {{ startup.name|title }}
+{% endblock %}
+
+{% block content %}
+    <article>
+        <div class = "row">
+        <div class = "offset-by-two eight columns">
+        <h2>{{ startup.name }}</h2>
+        <ul class = "inline">
+            <li>
+                <a href = "{{ startup.get_update_url }}" class = "button">Edit Startup</a>
+            </li>
+            <li>
+                <a href = "{{ startup.get_delete_url }}" class = "button">Delete Startup</a>
+            </li>
+        </ul>
+        <dl>
+            <dt>Date Founded</dt>
+                <dd>{{ startup.founded_date }}</dd>
+            <dt>Website</dt>
+                <dd>{{ startup.website|urlize }}</dd>
+            <dt>Contact</dt>
+                <dd>{{ startup.contact|obfuscate }}</dd>
+            
+            <dt>Tag{{ startup.tags.count|pluralize }}</dt>
+                {% for tag in startup.tags.all %}
+                    <dd>
+                        <a href = "{{ tag.get_absolute_url }}">
+                            {{ tag.name|title }}</a>
+                    </dd>
+                {% endfor %}
+
+            <dt>Feeds</dt>
+                <dd>
+                    <a href = "{{ startup.get_feed_atom_url }}">
+                        Atom 
+                    </a>
+                </dd>
+                <dd>
+                    <a href = "{{ startup.get_feed_rss_url }}">
+                        RSS 
+                    </a>
+                </dd>
+        </dl>
+
+        {{ startup.description|linebreaks }}
+        </div></div>
+
+            {% if startup.newslink_set.all %}
+                <div class = "row">
+                    <section class = "meta offset-by-two one-third column">
+                        <h3>Recent News</h3>
+                        <p>
+                            <a href = "{% url 'organiser_newslink_create' %}" class = "button">Add Article</a>
+                        </p>
+                        <ul class = "inline">
+                            {% for newslink in startup.newslink_set.all %}
+                                <li>
+                                    <a href = "{{ newslink.link }}">
+                                        {{ newslink.title|title }}</a>
+                                    (<a href = "{{ newslink.get_update_url }}">Edit</a>)
+                                    (<a href = "{{ newslink.get_delete_url }}">Delete</a>)
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </section>
+                </div>
+            {% endif %}
+
+            {% format_post_list startup %}
+    </article>
+{% endblock %}

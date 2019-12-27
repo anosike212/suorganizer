@@ -1,0 +1,53 @@
+{% extends parent_template|default:"organiser/base_organiser.html" %}
+
+{% block title %}
+{{ block.super }} - Tag List 
+{% endblock %}
+
+{% block create_button %}
+    <a href = "{% url 'organiser_tag_create' %}" class = "button button-primary">
+        Create New Tag
+    </a>
+{% endblock %}
+
+{% block org_content %}
+    <h2>Tag List</h2>
+    <div class = "mobile">
+        <a href = "{% url 'organiser_tag_create' %}" class = "button button-primary">Create New Tag</a>
+    </div>
+    <ul>
+        {% for tag in tag_list %}
+            <li>
+                <a href = "{{ tag.get_absolute_url }}">
+                    {{ tag.name|title }}
+                </a>
+                (<a href = "{{ tag.get_update_url }}">Edit</a>)
+                (<a href = "{{ tag.get_delete_url }}">Delete</a>)
+            </li>
+        {% empty %}
+            <li><em>There are currently no Tags available.</em></li>
+        {% endfor %}
+    </ul>
+    {% if is_paginated %}
+        <ul class = "inline">
+            {% if previous_page_url %}
+                <li>
+                    <a href = "{{ previous_page_url }}" class = "button">
+                        Previous
+                    </a>
+                </li>
+            {% endif %}
+            <li>
+                Page {{ tag_list.number }}
+                of {{ paginator.num_pages }}
+            </li>
+            {% if next_page_url %}
+                <li>
+                    <a href = "{{ next_page_url }}" class = "button">
+                        Next
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+{% endblock %}

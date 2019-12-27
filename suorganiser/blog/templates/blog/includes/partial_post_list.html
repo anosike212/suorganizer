@@ -1,0 +1,11 @@
+
+    <section {{ style }}>
+        <h3>Blog Post{{ blog_post_list|pluralize }}</h3>
+        <ul>
+            {% for post in blog_post_list %}
+            <li><a href = "{{ post.get_absolute_url }}">
+                {{ post.title|title }}
+            </a></li>
+            {% endfor %}
+        </ul>
+    </section>
